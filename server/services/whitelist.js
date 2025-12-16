@@ -4,10 +4,11 @@ export default ({strapi}) => ({
     return await query.findMany()
   },
   async registerUser(email) {
+    const normalized = email?.toLowerCase?.() || email
     const query = strapi.query('plugin::strapi-plugin-sso.whitelists')
     await query.create({
       data: {
-        email
+        email: normalized
       }
     })
   },
@@ -26,10 +27,15 @@ export default ({strapi}) => ({
       // If whitelist is disabled, set to true and skip
       return;
     }
+    const normalized = email?.toLowerCase?.() || email
+    const emailsToCheck = [normalized]
+    if (email && normalized !== email) {
+      emailsToCheck.push(email)
+    }
     const query = strapi.query('plugin::strapi-plugin-sso.whitelists')
     const result = await query.findOne({
       where: {
-        email
+        $or: emailsToCheck.map((value) => ({email: value}))
       }
     })
     if (result === null) {

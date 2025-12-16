@@ -150,6 +150,13 @@ export default ({strapi}) => ({
       throw new Error(accessResult.error);
     }
     const {token: accessToken} = accessResult;
+    const accessCookieOptions = {
+      httpOnly: true,
+      secure: false,
+      sameSite: 'lax',
+      path: '/',
+    };
+    ctx.cookies.set('strapi_admin_token', accessToken, accessCookieOptions);
     return accessToken;
   }
 });
