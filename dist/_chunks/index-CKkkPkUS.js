@@ -6,7 +6,7 @@ const reactRouterDom = require("react-router-dom");
 const admin = require("@strapi/strapi/admin");
 const designSystem = require("@strapi/design-system");
 const reactIntl = require("react-intl");
-const index = require("./index-cxp4VLJq.js");
+const index = require("./index-Ct4KE2zU.js");
 const styled = require("styled-components");
 const icons = require("@strapi/icons");
 const _interopDefault = (e) => e && e.__esModule ? e : { default: e };

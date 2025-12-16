@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { useFetchClient, Page, Layouts } from "@strapi/strapi/admin";
 import { Table, Thead, Tr, Th, Checkbox, Tbody, Td, Button, Box, Typography, Flex, Grid, Field, Divider, Dialog, IconButton, Alert, Tabs } from "@strapi/design-system";
 import { useIntl } from "react-intl";
-import { p as pluginId } from "./index-BlBkVmFr.mjs";
+import { p as pluginId } from "./index-B_Vv1Emo.mjs";
 import styled from "styled-components";
 import { Check, WarningCircle, Plus, Trash } from "@strapi/icons";
 const getTrad = (id) => `${pluginId}.${id}`;

@@ -134,16 +134,17 @@ export default ({strapi}) => ({
     const REMEMBER_ME = config["REMEMBER_ME"]
     const rememberMe = !!REMEMBER_ME
 
-    const {token: refreshToken} = await sessionManager(
-      'admin'
-    ).generateRefreshToken(userId, deviceId, {
+    const {token: refreshToken} = await sessionManager('admin').generateRefreshToken(userId, deviceId, {
       type: rememberMe ? 'refresh' : 'session',
     });
 
-    // TODO: reference the Configuration   values
-    // https://github.com/strapi/strapi/pull/24346/files#diff-c27336b21ee5785523f7fc802899a5d405da67d12c837c498c4766cb04a50b9aR64
-    const cookieOptions = {}
-    ctx.cookies.set('strapi_admin_refresh', refreshToken, cookieOptions);
+    const refreshCookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    };
+    ctx.cookies.set('strapi_admin_refresh', refreshToken, refreshCookieOptions);
 
     const accessResult = await sessionManager('admin').generateAccessToken(refreshToken);
     if ('error' in accessResult) {

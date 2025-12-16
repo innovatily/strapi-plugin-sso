@@ -1,7 +1,6 @@
-"use strict";
-const react = require("react");
-const jsxRuntime = require("react/jsx-runtime");
-const icons = require("@strapi/icons");
+import { useRef, useEffect } from "react";
+import { jsx } from "react/jsx-runtime";
+import { Lock } from "@strapi/icons";
 const __variableDynamicImportRuntimeHelper = (glob, path, segs) => {
   const v = glob[path];
   if (v) {
@@ -33,7 +32,8 @@ const scripts = {
   "watch:link": "strapi-plugin watch:link",
   verify: "strapi-plugin verify",
   test: "jest",
-  lint: "eslint"
+  lint: "eslint",
+  prepare: "npm run build"
 };
 const keywords = [
   "strapi",
@@ -98,7 +98,7 @@ const jest = {
   ],
   testEnvironment: "node"
 };
-const exports$1 = {
+const exports = {
   "./package.json": "./package.json",
   "./strapi-admin": {
     source: "./admin/src/index.js",
@@ -131,19 +131,19 @@ const pluginPkg = {
   license,
   devDependencies,
   jest,
-  exports: exports$1
+  exports
 };
 const pluginId = pluginPkg.name.replace(/^@strapi\/plugin-/i, "");
 const getTranslation = (id) => `${pluginId}.${id}`;
 const Initializer = ({ setPlugin }) => {
-  const ref = react.useRef();
+  const ref = useRef();
   ref.current = setPlugin;
-  react.useEffect(() => {
+  useEffect(() => {
     ref.current(pluginId);
   }, []);
   return null;
 };
-const PluginIcon = () => /* @__PURE__ */ jsxRuntime.jsx(icons.Lock, {});
+const PluginIcon = () => /* @__PURE__ */ jsx(Lock, {});
 const name = pluginPkg.strapi.displayName;
 const index = {
   register(app) {
@@ -155,7 +155,7 @@ const index = {
         defaultMessage: name
       },
       Component: async () => {
-        return await Promise.resolve().then(() => require("./index-oAAfuB7J.js"));
+        return await import("./index-CcxTP810.mjs");
       },
       permissions: [{ action: "plugin::strapi-plugin-sso.read", subject: null }]
     });
@@ -170,7 +170,7 @@ const index = {
   async registerTrads({ locales }) {
     const importedTrads = await Promise.all(
       locales.map((locale) => {
-        return __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./translations/en.json": () => Promise.resolve().then(() => require("./en-BbQ9XzfO.js")), "./translations/fr.json": () => Promise.resolve().then(() => require("./fr-C8Qw4iPZ.js")), "./translations/ja.json": () => Promise.resolve().then(() => require("./ja-B2WcMFA2.js")) }), `./translations/${locale}.json`, 3).then(({ default: data }) => {
+        return __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./translations/en.json": () => import("./en-AsM8uCFB.mjs"), "./translations/fr.json": () => import("./fr-hkSxFuzl.mjs"), "./translations/ja.json": () => import("./ja-COdupAQd.mjs") }), `./translations/${locale}.json`, 3).then(({ default: data }) => {
           const newData = Object.fromEntries(
             Object.entries(data).map(([key, value]) => [getTranslation(key), value])
           );
@@ -189,5 +189,7 @@ const index = {
     return Promise.resolve(importedTrads);
   }
 };
-exports.index = index;
-exports.pluginId = pluginId;
+export {
+  index as i,
+  pluginId as p
+};
